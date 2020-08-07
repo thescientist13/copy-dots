@@ -1,36 +1,32 @@
 /*
  * Use Case
- * Run Greenwood with empty config object and default workspace.
+ * Runs copy-dots by just passing a path to scan.
  *
  * Uaer Result
- * Should generate a bare bones Greenwood build.  (same as build.default.spec.js)
+ * Should copy only dot files with no special filters
  *
  * User Command
- * greenwood build
- *
- * User Config
- * {}
+ * copy-dots ../../some/path
  *
  * User Workspace
- * Greenwood default (src/)
+ * Default fixtures
  */
+
 const expect = require('chai').expect;
 const fs = require('fs');
 const path = require('path');
 const TestBed = require('../test-bed');
 
-describe.only('Run copy-dots', function() {
+describe('Run copy-dots', function() {
   const basePath = path.join(__dirname, './output');
   let bed;
 
   before(async function() {
-    bed = new TestBed(true);
-    // TODO
-    // this.context = await bed.setup(__dirname);
+    bed = new TestBed();
     await bed.setup(__dirname);
   });
 
-  describe('default with relative path', function() {
+  describe('default options with relative path', function() {
     before(async function() {
       await bed.runCommand('./src/index.js', '../fixtures');
     });
@@ -55,6 +51,6 @@ describe.only('Run copy-dots', function() {
   });
 
   after(function() {
-    // TODO bed.teardown();
+    // bed.teardown();
   });
 });

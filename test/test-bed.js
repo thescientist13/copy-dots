@@ -1,11 +1,20 @@
 /*
  * This module can be used to assist in the development of test cases that want run in a userland like environment
- * complete with an individual greenwood.config.js file and as many pages / assets / etc you need in a workspace directory
- * to simulate any "real world" project scenario you might need to test for.
- *
- * There are a number of examples in the CLI package you can use as a reference.
+ * to recreate project configurations, config files, fixtures, etc.
+ * 
+ * The main goal is to be able to easily simulate any "real world" scenario you might need to test for.
  *
  */
+
+// TODO
+/*
+ * is context needed? - test in greenwood
+ * setup / test files (fixtures, etc)
+ * why is output directory needed? 
+ * teardown (automatically clean setup / test files?), e.g. output file, greenwood/, .public/
+ * 
+ */
+
 // const fs = require('fs-extra');
 const os = require('os');
 const path = require('path');
@@ -24,8 +33,8 @@ module.exports = class TestBed {
     this.enableStdOut = enableStdOut; // debugging tests
   }
 
-  setup(cwd) {
   // setup(cwd, testFiles = []) {
+  setup(cwd) {
     console.log('setupTestBed for cwd', cwd);
     return new Promise(async (resolve, reject) => {
       try {

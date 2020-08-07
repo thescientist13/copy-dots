@@ -4,21 +4,19 @@
 const fs = require('fs');
 const path = require('path');
 
-function isDotFileFilter(file = '') {
-  console.log('isDotFileFilter', file);
+function isDotFile(file = '') {
   if (file.indexOf('.') === 0 && (file.indexOf('git') < 0)) {
-    console.log('return dot file', file);
     return file;
   }
 }
 
-function isDirectoryFilter(file = '') {
-  console.log('isDirectoryFilter', file);
+function isNotDirectory(file = '') {
   if (!fs.lstatSync(file).isDirectory()) {
     return file;
   }
 }
 
+// TODO
 // const filterFiles = (files = [], options = {}) => { // eslint-disable-line no-unused-vars
 //   console.log('filter for files ????', files);
 //   return new Promise((resolve, reject) => {
@@ -42,8 +40,8 @@ const scanFiles = (targetDirectory) => {
   return new Promise((resolve, reject) => {
     try {   
       const files = fs.readdirSync(targetDirectory)
-        .filter(isDotFileFilter)
-        .filter(file => isDirectoryFilter(`${targetDirectory}/${file}`));
+        .filter(isDotFile)
+        .filter(file => isNotDirectory(`${targetDirectory}/${file}`));
       
       resolve(files);
     } catch (error) {
@@ -63,29 +61,29 @@ const validateUserPath = (args) => {
       ? args[2]
       : path.join(process.cwd(), args[2]);
 
-    console.log('userPath', userPath);
     resolve(userPath);
   });
 };
 
 const run = async () => {
+  // console.log('params', process.argv);
+
   try {
-    let targetDirectory = process.cwd();
     console.log('Validating target directory...');
-    console.log('params', process.argv);
+    let targetDirectory = process.cwd();
     const userPathAbsolute = await validateUserPath(process.argv);
 
-    console.log('Scanning Files in user directory...');
-    console.log('userPathAbsolute', userPathAbsolute);
+    console.log('Scanning Files in user directory...', userPathAbsolute);
     const files = await scanFiles(userPathAbsolute);
 
     console.log('Filtering files in target directory...');
-    console.log('files', files);
-    const filteredFiles = files; // await filterFiles(files);
+    // console.log('files', files);
+    const filteredFiles = files; // TODO await filterFiles(files);
 
     console.log('Copying filtered files into current directory...');
-    console.log('========= FILTERED FILES', filteredFiles);
+    // console.log('========= FILTERED FILES', filteredFiles);
 
+    // TODO
     if (process.env.NODE_ENV === 'development' && !fs.existsSync(path.join(process.cwd(), './output'))) {
       fs.mkdirSync(path.join(process.cwd(), './output'));
     }
@@ -93,6 +91,7 @@ const run = async () => {
     filteredFiles.forEach(file => {
       const fullPath = `${userPathAbsolute}/${file}`;
 
+      // TODO
       if (process.env.NODE_ENV === 'development') {
         targetDirectory = path.join('output', file);
       }
