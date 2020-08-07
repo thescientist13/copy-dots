@@ -9,8 +9,7 @@
     "url": "git+https://github.com/thescientist13/copy-dots.git"
   },
   "keywords": [
-    "dot",
-    "files",
+    "dot files",
     "utility"
   ],
   "main": "src/index.js",
@@ -19,9 +18,12 @@
   },
   "scripts": {
     "develop": "export NODE_ENV=development && rimraf ./output && node .",
+    "lint": "eslint \"*.js\" \"./src/**/*.js\"",
     "start": "npm run develop"
   },
+  "dependencies": {},
   "devDependencies": {
+    "eslint": "^7.6.0",
     "rimraf": "^3.0.2"
   }
 }
