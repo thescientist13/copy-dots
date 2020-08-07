@@ -8,7 +8,7 @@ function filterForDotFiles(files = []) {
   console.log('filterForDotFiles', files);
   return files.filter(file => {
     console.log('file', file);
-    if (file.indexOf('.') === 0) {
+    if (file.indexOf('.') === 0 && (file.indexOf('git') < 0)) {
       return file;
     };
   })
