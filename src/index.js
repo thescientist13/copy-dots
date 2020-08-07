@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-/* eslint no-console: 0 */
 
+/* eslint no-console: 0 */
 const fs = require('fs');
 const path = require('path');
 
@@ -10,23 +10,23 @@ function filterForDotFiles(files = []) {
     console.log('file', file);
     if (file.indexOf('.') === 0 && (file.indexOf('git') < 0)) {
       return file;
-    };
-  })
-} 
+    }
+  });
+}
 
-const filterFiles = (files = [], options = {}) => {
+const filterFiles = (files = [], options = {}) => { // eslint-disable-line no-unused-vars
   console.log('filter for files ????', files);
   return new Promise((resolve, reject) => {
     try {
       const filteredFiles = filterForDotFiles(files);
         
       resolve(filteredFiles);
-    } catch(error) {
+    } catch (error) {
       console.log('Unexpected error filtering files', error);
       reject();
     }
   });
-}
+};
 
 const scanFiles = (targetDirectory) => {
   return new Promise((resolve, reject) => {
@@ -34,11 +34,12 @@ const scanFiles = (targetDirectory) => {
       const files = fs.readdirSync(targetDirectory);
       
       resolve(files);
-    } catch(error) {
+    } catch (error) {
       console.log('Unexpected error scanning files', error);
+      reject(error);
     }
   });
-}
+};
 
 const validateUserPath = (args) => { 
   return new Promise((resolve, reject) => {
@@ -84,14 +85,7 @@ const run = async () => {
       console.log('copying file from', fullPath);
       console.log('copying file to', targetDirectory);
       fs.copyFileSync(`${fullPath}`, targetDirectory);
-    })
-
-    // // success!
-    // console.log('-------------------------------------------------------');
-    // console.log('Success, your project is ready to go!');
-    // console.log(`Just run: cd ${TARGET_DIR}`);
-    // console.log('And then launch your project with: npm start');
-    // console.log('-------------------------------------------------------');
+    });
   } catch (err) {
     console.error(err);
   }

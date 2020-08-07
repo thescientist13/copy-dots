@@ -18,7 +18,7 @@
   },
   "scripts": {
     "develop": "export NODE_ENV=development && rimraf ./output && node .",
-    "lint": "eslint \".js\" \"./src/**/*.js\"",
+    "lint": "eslint \"*.js\" \"./src/**/*.js\"",
     "start": "npm run develop"
   },
   "dependencies": {},
