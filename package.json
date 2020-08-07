@@ -1,8 +1,9 @@
 {
   "name": "copy-dots",
   "version": "0.1.0",
-  "description": "Quickly copy dot files and more from a previous project into a new project",
-  "main": "src/index.js",
+  "description": "Quickly copy dot files and more from a previous project into a new project.",
+  "author": "Owen Buckley <owen@thegreenhouse.io>",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/thescientist13/copy-dots.git"
@@ -12,13 +13,15 @@
     "files",
     "utility"
   ],
-  "author": "Owen Buckley <owen@thegreenhouse.io>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/thescientist13/copy-dots/issues"
+  "main": "src/index.js",
+  "bin": {
+    "copy-dots": "./src/index.js"
   },
-  "homepage": "https://github.com/thescientist13/copy-dots#readme",
   "scripts": {
-    "start": "node ."
+    "develop": "export NODE_ENV=development && rimraf ./output && node .",
+    "start": "npm run develop"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2"
   }
 }
