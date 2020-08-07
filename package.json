@@ -1,0 +1,24 @@
+{
+  "name": "copy-dots",
+  "version": "0.1.0",
+  "description": "Quickly copy dot files and more from a previous project into a new project",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thescientist13/copy-dots.git"
+  },
+  "keywords": [
+    "dot",
+    "files",
+    "utility"
+  ],
+  "author": "Owen Buckley <owen@thegreenhouse.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thescientist13/copy-dots/issues"
+  },
+  "homepage": "https://github.com/thescientist13/copy-dots#readme",
+  "scripts": {
+    "start": "node ."
+  }
+}
