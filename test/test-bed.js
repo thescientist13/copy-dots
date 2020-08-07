@@ -35,7 +35,7 @@ module.exports = class TestBed {
 
   // setup(cwd, testFiles = []) {
   setup(cwd) {
-    console.log('setupTestBed for cwd', cwd);
+    // console.log('setupTestBed for cwd', cwd);
     return new Promise(async (resolve, reject) => {
       try {
         this.rootDir = cwd;
@@ -81,15 +81,14 @@ module.exports = class TestBed {
 
   runCommand(binPath, args) {
     // TODO bin path relative vs abs url
-    console.log('run bin ', binPath);
-    console.log('with args', args);
+    // console.log('run bin ', binPath);
+    // console.log('with args', args);
     return new Promise(async (resolve, reject) => {
+      const cliPath = path.join(process.cwd(), binPath);
       let err = '';
 
-      const cliPath = path.join(process.cwd(), binPath);
-
-      console.log('cli path', cliPath);
-
+      // console.log('cli path', cliPath);
+      
       const runner = os.platform() === 'win32' ? 'node.cmd' : 'node';
       const npm = spawn(runner, [cliPath, args], {
         cwd: this.rootDir,

@@ -36,12 +36,12 @@ function isNotDirectory(file = '') {
 //   });
 // };
 
-const scanFiles = (targetDirectory) => {
+const scanFiles = (userDirectory) => {
   return new Promise((resolve, reject) => {
     try {   
-      const files = fs.readdirSync(targetDirectory)
+      const files = fs.readdirSync(userDirectory)
         .filter(isDotFile)
-        .filter(file => isNotDirectory(`${targetDirectory}/${file}`));
+        .filter(file => isNotDirectory(`${userDirectory}/${file}`));
       
       resolve(files);
     } catch (error) {
@@ -69,14 +69,14 @@ const run = async () => {
   // console.log('params', process.argv);
 
   try {
-    console.log('Validating target directory...');
-    let targetDirectory = process.cwd();
+    console.log('Validating user directory...');
+    let currentDirectory = process.cwd();
     const userPathAbsolute = await validateUserPath(process.argv);
 
     console.log('Scanning Files in user directory...', userPathAbsolute);
     const files = await scanFiles(userPathAbsolute);
 
-    console.log('Filtering files in target directory...');
+    console.log('Filtering files in user directory...');
     // console.log('files', files);
     const filteredFiles = files; // TODO await filterFiles(files);
 
@@ -93,12 +93,12 @@ const run = async () => {
 
       // TODO
       if (process.env.NODE_ENV === 'development') {
-        targetDirectory = path.join('output', file);
+        currentDirectory = path.join('output', file);
       }
   
       console.log('copying file from', fullPath);
-      console.log('copying file to', targetDirectory);
-      fs.copyFileSync(`${fullPath}`, targetDirectory);
+      console.log('copying file to', currentDirectory);
+      fs.copyFileSync(`${fullPath}`, currentDirectory);
     });
   } catch (err) {
     console.error(err);

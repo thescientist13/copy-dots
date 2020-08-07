@@ -15,7 +15,7 @@
 const expect = require('chai').expect;
 const fs = require('fs');
 const path = require('path');
-const TestBed = require('../test-bed');
+const TestBed = require('../../test-bed');
 
 describe('Run copy-dots', function() {
   const basePath = path.join(__dirname, './output');
@@ -28,7 +28,7 @@ describe('Run copy-dots', function() {
 
   describe('default options with relative path', function() {
     before(async function() {
-      await bed.runCommand('./src/index.js', '../fixtures');
+      await bed.runCommand('./src/index.js', '../../fixtures');
     });
 
     it('should only copy 3 files', function() {
