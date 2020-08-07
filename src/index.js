@@ -4,34 +4,44 @@
 const fs = require('fs');
 const path = require('path');
 
-function filterForDotFiles(files = []) {
-  console.log('filterForDotFiles', files);
-  return files.filter(file => {
-    console.log('file', file);
-    if (file.indexOf('.') === 0 && (file.indexOf('git') < 0)) {
-      return file;
-    }
-  });
+function isDotFile(file = '') {
+  if (file.indexOf('.') === 0 && (file.indexOf('git') < 0)) {
+    return file;
+  }
 }
 
-const filterFiles = (files = [], options = {}) => { // eslint-disable-line no-unused-vars
-  console.log('filter for files ????', files);
-  return new Promise((resolve, reject) => {
-    try {
-      const filteredFiles = filterForDotFiles(files);
-        
-      resolve(filteredFiles);
-    } catch (error) {
-      console.log('Unexpected error filtering files', error);
-      reject();
-    }
-  });
-};
+function isNotDirectory(file = '') {
+  if (!fs.lstatSync(file).isDirectory()) {
+    return file;
+  }
+}
 
-const scanFiles = (targetDirectory) => {
+// TODO
+// const filterFiles = (files = [], options = {}) => { // eslint-disable-line no-unused-vars
+//   console.log('filter for files ????', files);
+//   return new Promise((resolve, reject) => {
+//     try {
+//       const filteredFiles = files
+//         .filter(isDotFileFilter)
+//         .filter(file => isDirectoryFilter(`${targetDirectory}/${file}`));
+      
+//       //  filterForDotFiles(files);
+//       // console.log('filtered files just for dots', filteredFiles);
+        
+//       resolve(filteredFiles);
+//     } catch (error) {
+//       console.log('Unexpected error filtering files', error);
+//       reject();
+//     }
+//   });
+// };
+
+const scanFiles = (userDirectory) => {
   return new Promise((resolve, reject) => {
     try {   
-      const files = fs.readdirSync(targetDirectory);
+      const files = fs.readdirSync(userDirectory)
+        .filter(isDotFile)
+        .filter(file => isNotDirectory(`${userDirectory}/${file}`));
       
       resolve(files);
     } catch (error) {
@@ -47,44 +57,48 @@ const validateUserPath = (args) => {
       reject('Missing required paramater: path.  Usage is npx copy-dots /some/path');
     }
 
-    const absPath = path.join(process.cwd(), args[2]);
+    const userPath = path.isAbsolute(args[2]) 
+      ? args[2]
+      : path.join(process.cwd(), args[2]);
 
-    resolve(absPath);
+    resolve(userPath);
   });
 };
 
 const run = async () => {
+  // console.log('params', process.argv);
+
   try {
-    let targetDirectory = process.cwd();
-    console.log('Validating target directory...');
-    console.log('params', process.argv);
+    console.log('Validating user directory...');
+    let currentDirectory = process.cwd();
     const userPathAbsolute = await validateUserPath(process.argv);
 
-    console.log('Scanning Files in user directory...');
-    console.log('userPathAbsolute', userPathAbsolute);
+    console.log('Scanning Files in user directory...', userPathAbsolute);
     const files = await scanFiles(userPathAbsolute);
 
-    console.log('Filtering files in target directory...');
-    console.log('files', files);
-    const filteredFiles = await filterFiles(files);
+    console.log('Filtering files in user directory...');
+    // console.log('files', files);
+    const filteredFiles = files; // TODO await filterFiles(files);
 
     console.log('Copying filtered files into current directory...');
-    console.log('========= FILTERED FILES', filteredFiles);
+    // console.log('========= FILTERED FILES', filteredFiles);
 
-    if (process.env.NODE_ENV === 'development') {
+    // TODO
+    if (process.env.NODE_ENV === 'development' && !fs.existsSync(path.join(process.cwd(), './output'))) {
       fs.mkdirSync(path.join(process.cwd(), './output'));
     }
 
     filteredFiles.forEach(file => {
       const fullPath = `${userPathAbsolute}/${file}`;
 
+      // TODO
       if (process.env.NODE_ENV === 'development') {
-        targetDirectory = path.join('./output', file);
+        currentDirectory = path.join('output', file);
       }
   
       console.log('copying file from', fullPath);
-      console.log('copying file to', targetDirectory);
-      fs.copyFileSync(`${fullPath}`, targetDirectory);
+      console.log('copying file to', currentDirectory);
+      fs.copyFileSync(`${fullPath}`, currentDirectory);
     });
   } catch (err) {
     console.error(err);

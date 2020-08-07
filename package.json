@@ -18,12 +18,18 @@
   },
   "scripts": {
     "develop": "export NODE_ENV=development && rimraf ./output && node .",
-    "lint": "eslint \"*.js\" \"./src/**/*.js\"",
-    "start": "npm run develop"
+    "lint": "eslint \"*.js\" \"./src/**/*.js\" \"./test/**/**/*.js\"",
+    "start": "npm run develop",
+    "test": "export NODE_ENV=development && nyc mocha",
+    "test:tdd": "export NODE_ENV=development && yarn test --watch"
   },
   "dependencies": {},
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^7.6.0",
+    "fs-extra": "^9.0.1",
+    "mocha": "^8.1.1",
+    "nyc": "^15.1.0",
     "rimraf": "^3.0.2"
   }
 }
