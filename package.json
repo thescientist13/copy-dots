@@ -20,8 +20,8 @@
     "develop": "export NODE_ENV=development && rimraf ./output && node .",
     "lint": "eslint \"*.js\" \"./src/**/*.js\" \"./test/**/**/*.js\"",
     "start": "npm run develop",
-    "test": "nyc mocha",
-    "test:tdd": "yarn test --watch"
+    "test": "export NODE_ENV=development && nyc mocha",
+    "test:tdd": "export NODE_ENV=development && yarn test --watch"
   },
   "dependencies": {},
   "devDependencies": {

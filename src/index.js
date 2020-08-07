@@ -4,34 +4,46 @@
 const fs = require('fs');
 const path = require('path');
 
-function filterForDotFiles(files = []) {
-  console.log('filterForDotFiles', files);
-  return files.filter(file => {
-    console.log('file', file);
-    if (file.indexOf('.') === 0 && (file.indexOf('git') < 0)) {
-      return file;
-    }
-  });
+function isDotFileFilter(file = '') {
+  console.log('isDotFileFilter', file);
+  if (file.indexOf('.') === 0 && (file.indexOf('git') < 0)) {
+    console.log('return dot file', file);
+    return file;
+  }
 }
 
-const filterFiles = (files = [], options = {}) => { // eslint-disable-line no-unused-vars
-  console.log('filter for files ????', files);
-  return new Promise((resolve, reject) => {
-    try {
-      const filteredFiles = filterForDotFiles(files);
+function isDirectoryFilter(file = '') {
+  console.log('isDirectoryFilter', file);
+  if (!fs.lstatSync(file).isDirectory()) {
+    return file;
+  }
+}
+
+// const filterFiles = (files = [], options = {}) => { // eslint-disable-line no-unused-vars
+//   console.log('filter for files ????', files);
+//   return new Promise((resolve, reject) => {
+//     try {
+//       const filteredFiles = files
+//         .filter(isDotFileFilter)
+//         .filter(file => isDirectoryFilter(`${targetDirectory}/${file}`));
+      
+//       //  filterForDotFiles(files);
+//       // console.log('filtered files just for dots', filteredFiles);
         
-      resolve(filteredFiles);
-    } catch (error) {
-      console.log('Unexpected error filtering files', error);
-      reject();
-    }
-  });
-};
+//       resolve(filteredFiles);
+//     } catch (error) {
+//       console.log('Unexpected error filtering files', error);
+//       reject();
+//     }
+//   });
+// };
 
 const scanFiles = (targetDirectory) => {
   return new Promise((resolve, reject) => {
     try {   
-      const files = fs.readdirSync(targetDirectory);
+      const files = fs.readdirSync(targetDirectory)
+        .filter(isDotFileFilter)
+        .filter(file => isDirectoryFilter(`${targetDirectory}/${file}`));
       
       resolve(files);
     } catch (error) {
@@ -47,9 +59,12 @@ const validateUserPath = (args) => {
       reject('Missing required paramater: path.  Usage is npx copy-dots /some/path');
     }
 
-    const absPath = path.join(process.cwd(), args[2]);
+    const userPath = path.isAbsolute(args[2]) 
+      ? args[2]
+      : path.join(process.cwd(), args[2]);
 
-    resolve(absPath);
+    console.log('userPath', userPath);
+    resolve(userPath);
   });
 };
 
@@ -66,12 +81,12 @@ const run = async () => {
 
     console.log('Filtering files in target directory...');
     console.log('files', files);
-    const filteredFiles = await filterFiles(files);
+    const filteredFiles = files; // await filterFiles(files);
 
     console.log('Copying filtered files into current directory...');
     console.log('========= FILTERED FILES', filteredFiles);
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development' && !fs.existsSync(path.join(process.cwd(), './output'))) {
       fs.mkdirSync(path.join(process.cwd(), './output'));
     }
 
@@ -79,7 +94,7 @@ const run = async () => {
       const fullPath = `${userPathAbsolute}/${file}`;
 
       if (process.env.NODE_ENV === 'development') {
-        targetDirectory = path.join('./output', file);
+        targetDirectory = path.join('output', file);
       }
   
       console.log('copying file from', fullPath);

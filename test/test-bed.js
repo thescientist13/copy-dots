@@ -6,12 +6,13 @@
  * There are a number of examples in the CLI package you can use as a reference.
  *
  */
-const fs = require('fs-extra');
+// const fs = require('fs-extra');
 const os = require('os');
 const path = require('path');
 const { spawn } = require('child_process');
 
-const setupFiles = [];
+// TODO mocha-test-bed?
+// const setupFiles = [];
 // const setupFiles = [{
 //   dir: 'node_modules/@webcomponents/webcomponentsjs',
 //   name: 'webcomponents-bundle.js'
@@ -23,73 +24,65 @@ module.exports = class TestBed {
     this.enableStdOut = enableStdOut; // debugging tests
   }
 
-  setupTestBed(cwd, testFiles = []) {
+  setup(cwd) {
+  // setup(cwd, testFiles = []) {
+    console.log('setupTestBed for cwd', cwd);
     return new Promise(async (resolve, reject) => {
       try {
         this.rootDir = cwd;
-        this.publicDir = path.join(this.rootDir, 'public');
-        this.buildDir = path.join(this.rootDir, '.greenwood');
+        // this.publicDir = path.join(this.rootDir, 'public');
+        // this.buildDir = path.join(this.rootDir, '.greenwood');
 
-        await this.teardownTestBed();
+        // await this.teardownTestBed();
 
-        await Promise.all(setupFiles.concat(testFiles).map((file) => {
-          return new Promise(async (resolve, reject) => {
-            try {
-              const targetSrc = path.join(process.cwd(), file.dir, file.name);
-              const targetDir = path.join(cwd, file.dir);
-              const targetPath = path.join(cwd, file.dir, file.name);
+        // await Promise.all(setupFiles.concat(testFiles).map((file) => {
+        //   return new Promise(async (resolve, reject) => {
+        //     try {
+        //       const targetSrc = path.join(process.cwd(), file.dir, file.name);
+        //       const targetDir = path.join(cwd, file.dir);
+        //       const targetPath = path.join(cwd, file.dir, file.name);
 
-              await new Promise(async(resolve, reject) => {
-                try {
-                  await fs.ensureDir(targetDir, { recursive: true });
-                  await fs.copy(targetSrc, targetPath);
-                  resolve();
-                } catch (err) {
-                  reject(err);
-                }
-              });
+        //       await new Promise(async(resolve, reject) => {
+        //         try {
+        //           await fs.ensureDir(targetDir, { recursive: true });
+        //           await fs.copy(targetSrc, targetPath);
+        //           resolve();
+        //         } catch (err) {
+        //           reject(err);
+        //         }
+        //       });
 
-              resolve();
-            } catch (err) {
-              reject(err);
-            }
-          });
-        }));
+        //       resolve();
+        //     } catch (err) {
+        //       reject(err);
+        //     }
+        //   });
+        // }));
 
-        resolve({
-          publicDir: this.publicDir
-        });
-      } catch (err) {
-        reject(err);
-      }
-
-    });
-  }
-
-  teardownTestBed() {
-    return new Promise(async(resolve, reject) => {
-      try {
-        await fs.remove(path.join(this.rootDir, '.greenwood'));
-        await fs.remove(path.join(this.rootDir, 'public'));
-
-        await Promise.all(setupFiles.map((file) => {
-          return fs.remove(path.join(this.rootDir, file.dir.split('/')[0]));
-        }));
         resolve();
+        // resolve({
+        //   publicDir: this.publicDir
+        // });
       } catch (err) {
         reject(err);
       }
+
     });
   }
 
-  runGreenwoodCommand(task) {
+  runCommand(binPath, args) {
+    // TODO bin path relative vs abs url
+    console.log('run bin ', binPath);
+    console.log('with args', args);
     return new Promise(async (resolve, reject) => {
       let err = '';
 
-      const cliPath = path.join(process.cwd(), './packages/cli/src/index.js');
+      const cliPath = path.join(process.cwd(), binPath);
+
+      console.log('cli path', cliPath);
 
       const runner = os.platform() === 'win32' ? 'node.cmd' : 'node';
-      const npm = spawn(runner, [cliPath, task], {
+      const npm = spawn(runner, [cliPath, args], {
         cwd: this.rootDir,
         shell: true
       });
@@ -117,4 +110,20 @@ module.exports = class TestBed {
       });
     });
   }
+
+  // teardown() {
+  //   return new Promise(async(resolve, reject) => {
+  //     try {
+  //       await fs.remove(path.join(this.rootDir, '.greenwood'));
+  //       await fs.remove(path.join(this.rootDir, 'public'));
+
+  //       await Promise.all(setupFiles.map((file) => {
+  //         return fs.remove(path.join(this.rootDir, file.dir.split('/')[0]));
+  //       }));
+  //       resolve();
+  //     } catch (err) {
+  //       reject(err);
+  //     }
+  //   });
+  // }
 };
