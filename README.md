@@ -12,7 +12,7 @@ TBD (node version, etc)
 
 ## Usage
 
-**copy dota** has one required paramater, and can take a number of options.
+**copy dota** has one required paramater which is a path. ~~and it can take a number of options.~~
 
 ### Basic
 
