@@ -6,7 +6,7 @@
 
 ## Overview
 
-Quickly copy dot files (and more!) from one project into an another project with a single command.  Great for scaffolding / initializing a new project!
+Quickly copy dot files (and more!) from one project into another project with a single command.  Great for scaffolding or initializing a new project!  🚀
 
 ![dotcs](./.github/assets/dots.jpg)
 
@@ -17,11 +17,11 @@ Make sure to have [latest NodeJS LTS](https://nodejs.org/) installed.
 
 ## Usage
 
-**copy-dotS** has one required paramater, which is a path.  Additional options available to include other file types / patterns.
+**copy-dots** has one required paramater, which is a path.  Additional options available to include other file types / patterns.
 
 ### Path (required)
 
-**copy-dots** at least neads to know what path to copy your files from.
+**copy-dots** at least needs to know what path to copy your files from.
 
 ```sh
 $ npx copy-dots ../../my-project
