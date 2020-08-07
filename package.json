@@ -1,7 +1,7 @@
 {
   "name": "copy-dots",
   "version": "0.1.0",
-  "description": "Quickly copy dot files and more from a previous project into a new project.",
+  "description": "Quickly copy dot files (and more!) from another project into an existing project with a single command.",
   "author": "Owen Buckley <owen@thegreenhouse.io>",
   "license": "MIT",
   "repository": {
@@ -16,6 +16,9 @@
   "bin": {
     "copy-dots": "./src/index.js"
   },
+    "files": [
+    "src/"
+  ],
   "scripts": {
     "develop": "export NODE_ENV=development && rimraf ./output && node .",
     "lint": "eslint \"*.js\" \"./src/**/*.js\" \"./test/**/**/*.js\"",
@@ -23,7 +26,6 @@
     "test": "export NODE_ENV=development && nyc mocha",
     "test:tdd": "export NODE_ENV=development && yarn test --watch"
   },
-  "dependencies": {},
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint": "^7.6.0",
