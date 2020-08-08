@@ -6,9 +6,9 @@
  *
  */
 
-// TODO
+// TODO Notes
 /*
- * is context needed? - test in greenwood
+ * is context needed? - test in greenwood. call it mocha-test-bed if so?
  * setup / test files (fixtures, etc)
  * why is output directory needed? 
  * teardown (automatically clean setup / test files?), e.g. output file, greenwood/, .public/
@@ -20,7 +20,6 @@ const os = require('os');
 const path = require('path');
 const { spawn } = require('child_process');
 
-// TODO mocha-test-bed?
 // const setupFiles = [];
 // const setupFiles = [{
 //   dir: 'node_modules/@webcomponents/webcomponentsjs',
