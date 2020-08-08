@@ -16,7 +16,6 @@ function isNotDirectory(file = '') {
   }
 }
 
-// TODO
 // const filterFiles = (files = [], options = {}) => { // eslint-disable-line no-unused-vars
 //   console.log('filter for files ????', files);
 //   return new Promise((resolve, reject) => {
@@ -78,7 +77,7 @@ const run = async () => {
 
     console.log('Filtering files in user directory...');
     // console.log('files', files);
-    const filteredFiles = files; // TODO await filterFiles(files);
+    const filteredFiles = files;
 
     console.log('Copying filtered files into current directory...');
     console.log('========= FILTERED FILES', filteredFiles);

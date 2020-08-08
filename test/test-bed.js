@@ -6,15 +6,6 @@
  *
  */
 
-// TODO Notes
-/*
- * is context needed? - test in greenwood. call it mocha-test-bed if so?
- * setup / test files (fixtures, etc)
- * why is output directory needed? 
- * teardown (automatically clean setup / test files?), e.g. output file, greenwood/, .public/
- * 
- */
-
 // const fs = require('fs-extra');
 const os = require('os');
 const path = require('path');
@@ -79,7 +70,6 @@ module.exports = class TestBed {
   }
 
   runCommand(binPath, args) {
-    // TODO bin path relative vs abs url
     // console.log('run bin ', binPath);
     // console.log('with args', args);
     return new Promise(async (resolve, reject) => {
