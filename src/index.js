@@ -16,7 +16,6 @@ function isNotDirectory(file = '') {
   }
 }
 
-// TODO
 // const filterFiles = (files = [], options = {}) => { // eslint-disable-line no-unused-vars
 //   console.log('filter for files ????', files);
 //   return new Promise((resolve, reject) => {
@@ -78,27 +77,17 @@ const run = async () => {
 
     console.log('Filtering files in user directory...');
     // console.log('files', files);
-    const filteredFiles = files; // TODO await filterFiles(files);
+    const filteredFiles = files;
 
     console.log('Copying filtered files into current directory...');
-    // console.log('========= FILTERED FILES', filteredFiles);
-
-    // TODO
-    if (process.env.NODE_ENV === 'development' && !fs.existsSync(path.join(process.cwd(), './output'))) {
-      fs.mkdirSync(path.join(process.cwd(), './output'));
-    }
+    console.log('========= FILTERED FILES', filteredFiles);
 
     filteredFiles.forEach(file => {
       const fullPath = `${userPathAbsolute}/${file}`;
-
-      // TODO
-      if (process.env.NODE_ENV === 'development') {
-        currentDirectory = path.join('output', file);
-      }
   
       console.log('copying file from', fullPath);
       console.log('copying file to', currentDirectory);
-      fs.copyFileSync(`${fullPath}`, currentDirectory);
+      fs.copyFileSync(fullPath, `${currentDirectory}/${file}`);
     });
   } catch (err) {
     console.error(err);

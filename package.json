@@ -20,11 +20,11 @@
     "src/"
   ],
   "scripts": {
-    "develop": "export NODE_ENV=development && rimraf ./output && node .",
+    "develop": "rimraf ./output && node .",
     "lint": "eslint \"*.js\" \"./src/**/*.js\" \"./test/**/**/*.js\"",
     "start": "npm run develop",
-    "test": "export NODE_ENV=development && nyc mocha",
-    "test:tdd": "export NODE_ENV=development && yarn test --watch"
+    "test": "nyc mocha",
+    "test:tdd": "yarn test --watch"
   },
   "devDependencies": {
     "chai": "^4.2.0",

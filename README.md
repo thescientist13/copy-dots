@@ -27,7 +27,7 @@ Make sure to have [latest NodeJS LTS](https://nodejs.org/) installed.
 $ npx copy-dots ../../my-project
 ```
 
-### Options (TODO)
+### Options (Coming Soon!)
 
 **copy-dots** also support the following options to copy additional files.
 
@@ -36,6 +36,3 @@ $ npx copy-dots ../../my-project
 - -r (readme), 
 - -w (all the flags)
 - -c (config files)
-
-## Contributing
-TODO

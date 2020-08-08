@@ -6,21 +6,11 @@
  *
  */
 
-// TODO
-/*
- * is context needed? - test in greenwood
- * setup / test files (fixtures, etc)
- * why is output directory needed? 
- * teardown (automatically clean setup / test files?), e.g. output file, greenwood/, .public/
- * 
- */
-
 // const fs = require('fs-extra');
 const os = require('os');
 const path = require('path');
 const { spawn } = require('child_process');
 
-// TODO mocha-test-bed?
 // const setupFiles = [];
 // const setupFiles = [{
 //   dir: 'node_modules/@webcomponents/webcomponentsjs',
@@ -80,7 +70,6 @@ module.exports = class TestBed {
   }
 
   runCommand(binPath, args) {
-    // TODO bin path relative vs abs url
     // console.log('run bin ', binPath);
     // console.log('with args', args);
     return new Promise(async (resolve, reject) => {
