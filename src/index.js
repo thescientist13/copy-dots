@@ -80,7 +80,7 @@ const run = async () => {
     const filteredFiles = files;
 
     console.log('Copying filtered files into current directory...');
-    console.log('========= FILTERED FILES', filteredFiles);
+    // console.log('========= FILTERED FILES', filteredFiles);
 
     filteredFiles.forEach(file => {
       const fullPath = `${userPathAbsolute}/${file}`;
