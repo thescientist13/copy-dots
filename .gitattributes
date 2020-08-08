@@ -2,3 +2,6 @@
 
 *.bat     text eol=crlf
 *.sh      text eol=lf
+
+*.gif     binary
+*.jpg     binary
