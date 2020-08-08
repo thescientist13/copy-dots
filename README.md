@@ -8,7 +8,11 @@
 
 Quickly copy dot files (and more!) from one project into another project with a single command.  Great for scaffolding or initializing a new project!  🚀
 
-![dotcs](./.github/assets/dots.jpg)
+![copy-dots](./.github/assets/dots.jpg)
+
+## Demo
+
+![copy-dots-demo](./.github/assets/copy-dots-demo.gif)
 
 > _**Note**: by default **copy-dots** will ignore any filename with that contains `"git"` in it to avoid clobbering your local directory by accident.  Fear not!  You can enable support for this using our options (below 👇)!_
 
