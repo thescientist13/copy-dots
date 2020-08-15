@@ -1,6 +1,6 @@
 {
   "name": "copy-dots",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Quickly copy dot files (and more!) from another project into an existing project with a single command.",
   "author": "Owen Buckley <owen@thegreenhouse.io>",
   "license": "MIT",
