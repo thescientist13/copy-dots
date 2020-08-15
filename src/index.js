@@ -4,6 +4,10 @@
 const fs = require('fs');
 const path = require('path');
 
+const commands = {
+  '-r': (file) => { return file.toLowerCase().indexOf('readme') >= 0; }
+};
+
 function isDotFile(file = '') {
   if (file.indexOf('.') === 0 && (file.indexOf('git') < 0)) {
     return file;
@@ -16,33 +20,30 @@ function isNotDirectory(file = '') {
   }
 }
 
-// const filterFiles = (files = [], options = {}) => { // eslint-disable-line no-unused-vars
-//   console.log('filter for files ????', files);
-//   return new Promise((resolve, reject) => {
-//     try {
-//       const filteredFiles = files
-//         .filter(isDotFileFilter)
-//         .filter(file => isDirectoryFilter(`${targetDirectory}/${file}`));
-      
-//       //  filterForDotFiles(files);
-//       // console.log('filtered files just for dots', filteredFiles);
-        
-//       resolve(filteredFiles);
-//     } catch (error) {
-//       console.log('Unexpected error filtering files', error);
-//       reject();
-//     }
-//   });
-// };
-
-const scanFiles = (userDirectory) => {
+const scanFiles = (userDirectory, options) => {
   return new Promise((resolve, reject) => {
     try {   
-      const files = fs.readdirSync(userDirectory)
+      const files = fs.readdirSync(userDirectory);
+      const userFiles = [];
+
+      const dotFiles = files
         .filter(isDotFile)
         .filter(file => isNotDirectory(`${userDirectory}/${file}`));
+
+      options.forEach((option) => {
+        if (commands[options]) {
+          console.log('appling option...', option);
+          files
+            .filter(commands[options])
+            .forEach(file => {
+              userFiles.push(file);
+            });
+        } else {
+          console.log(`WARNING: options ${options} not valid, please try one of ${Object.keys(commands).join(',')}`);
+        }
+      });
       
-      resolve(files);
+      resolve([...dotFiles, ...userFiles]);
     } catch (error) {
       console.log('Unexpected error scanning files', error);
       reject(error);
@@ -65,24 +66,22 @@ const validateUserPath = (args) => {
 };
 
 const run = async () => {
-  // console.log('params', process.argv);
 
   try {
     console.log('Validating user directory...');
     let currentDirectory = process.cwd();
     const userPathAbsolute = await validateUserPath(process.argv);
 
-    console.log('Scanning Files in user directory...', userPathAbsolute);
-    const files = await scanFiles(userPathAbsolute);
+    console.log('Reading options...');
+    const options = process.argv.length > 3
+      ? process.argv.slice(3)
+      : [];
 
-    console.log('Filtering files in user directory...');
-    // console.log('files', files);
-    const filteredFiles = files;
+    console.log('Scanning Files in user directory...', userPathAbsolute);
+    const files = await scanFiles(userPathAbsolute, options);
 
     console.log('Copying filtered files into current directory...');
-    // console.log('========= FILTERED FILES', filteredFiles);
-
-    filteredFiles.forEach(file => {
+    files.forEach(file => {
       const fullPath = `${userPathAbsolute}/${file}`;
   
       console.log('copying file from', fullPath);

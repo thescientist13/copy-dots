@@ -30,15 +30,15 @@ describe('Run copy-dots', function() {
     await bed.setup(basePath);
   });
 
-  describe('default options with relative path', function() {
+  describe('with readme flag', function() {
     before(async function() {
       await bed.runCommand(
         './src/index.js', 
-        path.join(process.cwd(), './test/fixtures')
+        `${path.join(process.cwd(), './test/fixtures')} -v`
       );
     });
 
-    it('should only copy 3 files', function() {
+    it('should copy 3 files', function() {
       const files = fs.readdirSync(basePath);
      
       expect(files.length).to.be.equal(3);
