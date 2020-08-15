@@ -71,7 +71,7 @@ module.exports = class TestBed {
 
   runCommand(binPath, args) {
     // console.log('run bin ', binPath);
-    console.log('with args', args);
+    // console.log('with args', args);
     return new Promise(async (resolve, reject) => {
       const cliPath = path.join(process.cwd(), binPath);
       let err = '';
