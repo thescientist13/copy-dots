@@ -35,11 +35,11 @@ $ npx copy-dots ../../my-project
 
 **copy-dots** also support the following options to copy additional files.
 
-* `-r` Readme file
-* `-l` License file (TODO) 
-- `-g` git files like ignore and attributes (no _.git/_ though) (TODO)
-- `-c` config files like _greenwood.config.js_ (TODO)
-- `-w` Includes all the flags (TODO)
+* `-r` Readme
+* `-l` License (TODO) 
+* `-g` git files like _.gitignore_ and _.gitattributes_ (no _.git/_ though!) (TODO)
+* `-c` config files like _greenwood.config.js_ (TODO)
+* `-w` Includes all the flags (TODO)
 
 For example, the below would copy dot files and the README
 ```sh
