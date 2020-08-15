@@ -25,23 +25,23 @@ describe('Run copy-dots', function() {
     await fs.mkdir(path.join(__dirname, './output'));
 
     basePath = path.join(__dirname, './output');
-    bed = new TestBed();
+    bed = new TestBed(true);
 
     await bed.setup(basePath);
   });
 
-  describe('default options with relative path', function() {
+  describe('with readme flag', function() {
     before(async function() {
       await bed.runCommand(
         './src/index.js', 
-        path.join(process.cwd(), './test/fixtures')
+        `${path.join(process.cwd(), './test/fixtures')} -r`
       );
     });
 
-    it('should only copy 3 files', function() {
+    it('should copy 4 files', function() {
       const files = fs.readdirSync(basePath);
      
-      expect(files.length).to.be.equal(3);
+      expect(files.length).to.be.equal(4);
     });
 
     it('should have an .editorconfig file', function() {
@@ -54,6 +54,10 @@ describe('Run copy-dots', function() {
 
     it('should have .mocharc.js file', function() {
       expect(fs.existsSync(`${basePath}/.mocharc.js`)).to.be.equal(true);
+    });
+
+    it('should have README.md file', function() {
+      expect(fs.existsSync(`${basePath}/README.md`)).to.be.equal(true);
     });
   });
 
