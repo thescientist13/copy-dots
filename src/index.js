@@ -24,22 +24,24 @@ const scanFiles = (userDirectory, options) => {
   return new Promise((resolve, reject) => {
     try {   
       const files = fs.readdirSync(userDirectory);
+      const userFiles = [];
 
       const dotFiles = files
         .filter(isDotFile)
         .filter(file => isNotDirectory(`${userDirectory}/${file}`));
 
-      const userFiles = options.map((option) => {
+      options.forEach((option) => {
         if (commands[options]) {
-          console.log('apply option', option);
-          return files.filter(commands[options]);
+          console.log('appling option...', option);
+          files
+            .filter(commands[options])
+            .forEach(file => {
+              userFiles.push(file);
+            });
         } else {
-          // console.error(`options ${options} not valid, please try one of ${Object.keys(commands).join(',')}`);
-          return null;
+          console.log(`WARNING: options ${options} not valid, please try one of ${Object.keys(commands).join(',')}`);
         }
-      }); // .filter((file) => { return file !== null; });
-
-      console.log('!!!!!!!!!userFiles', ...userFiles);
+      });
       
       resolve([...dotFiles, ...userFiles]);
     } catch (error) {
@@ -74,18 +76,11 @@ const run = async () => {
     const options = process.argv.length > 3
       ? process.argv.slice(3)
       : [];
-    console.log('custom options', options);
 
     console.log('Scanning Files in user directory...', userPathAbsolute);
     const files = await scanFiles(userPathAbsolute, options);
 
-    // console.log('Filtering files in user directory...');
-    // console.log('files', files);
-    // const filteredFiles = await applyOptions(files, options);
-
     console.log('Copying filtered files into current directory...');
-    // console.log('========= FILTERED FILES', filteredFiles);
-
     files.forEach(file => {
       const fullPath = `${userPathAbsolute}/${file}`;
   
