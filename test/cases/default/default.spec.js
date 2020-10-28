@@ -14,7 +14,7 @@
 const expect = require('chai').expect;
 const fs = require('fs-extra');
 const path = require('path');
-const Runner = require('../../index').Runner;
+const Runner = require('gallinago').Runner;
 
 describe('Run copy-dots', function() {
   let runner;

@@ -16,7 +16,7 @@
   "bin": {
     "copy-dots": "./src/index.js"
   },
-    "files": [
+  "files": [
     "src/"
   ],
   "scripts": {
@@ -30,6 +30,7 @@
     "chai": "^4.2.0",
     "eslint": "^7.6.0",
     "fs-extra": "^9.0.1",
+    "gallinago": "^0.1.0",
     "mocha": "^8.1.1",
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2"
