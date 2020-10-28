@@ -834,6 +834,11 @@ functional-red-black-tree@^1.0.1:
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
 
+gallinago@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/gallinago/-/gallinago-0.1.0.tgz#9e0818aee630a28da4f4adda41e7da67c54dfb9a"
+  integrity sha512-3lqBHr03dFWCJ8Z9njVZ2CQZkN+wloMacan42pVUaxu7BHMks2b2Lc0CufkMt3kPZFAic9dZamj6pQdhw71lng==
+
 gensync@^1.0.0-beta.1:
   version "1.0.0-beta.1"
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.1.tgz#58f4361ff987e5ff6e1e7a210827aa371eaac269"
