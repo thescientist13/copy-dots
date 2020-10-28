@@ -13,27 +13,24 @@
  */
 
 const expect = require('chai').expect;
-const TestBed = require('../../test-bed');
+const path = require('path');
+const Runner = require('../../index').Runner;
 
 describe('Run copy-dots', function() {
-  let bed;
+  const cliPath = path.join(process.cwd(), 'src', 'index.js');
+  let runner;
 
   before(async function() {
-    bed = new TestBed();
-    await bed.setup(__dirname);
+    runner = new Runner();
   });
 
   describe('with no path provided', function() {
     it('should throw an error that path was not provided', async function() {
       try {
-        await bed.runCommand('./src/index.js');
+        await runner.runCommand(cliPath);
       } catch (err) {
         expect(err).to.contain('Missing required paramater: path.  Usage is npx copy-dots /some/path');
       }
     });
-  });
-
-  after(function() {
-    // bed.teardown();
   });
 });
